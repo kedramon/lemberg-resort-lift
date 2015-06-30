@@ -1,0 +1,318 @@
+<?php
+
+/**
+ * Implements hook_schema();
+ */
+function lift_schema() {
+  $schema['lift'] = array(
+    'fields' => array(
+      'lid' => array(
+        'description' => 'The primary identifier for lift.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'created' => array(
+        'description' => 'The Unix timestamp when the activation data record was created.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'changed' => array(
+        'description' => 'The Unix timestamp when the activation data record was most recently updated.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'status' => array(
+        'description' => 'Boolean indicating whether the lift is published (visible to non-administrators).',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 1,
+      ),
+    ),
+    'primary key' => array('lid'),
+  );
+
+  return $schema;
+}
+
+function lift_install() {
+  // Attach fields to Lift entity
+  foreach (lift_fields() as $field) {
+    if (!field_info_field($field['field_base']['field_name'])) {
+      field_create_field($field['field_base']);
+      field_create_instance($field['field_instance']);
+    }
+  }
+
+  // Create vocabularies
+  lift_add_vocabularies();
+}
+
+function lift_fields() {
+  $fields = array();
+
+  // Lift name
+  $fields['lift_name'] = array(
+    'field_base' => array(
+      'field_name' => 'lift_name',
+      'entity_types' => array(),
+      'settings' => array(
+        'max_length' => 255,
+      ),
+      'type' => 'text',
+    ),
+    'field_instance' => array(
+      'entity_type' => 'lift',
+      'bundle' => 'lift',
+      'field_name' => 'lift_name',
+      'default_value' => NULL,
+      'label' => t('Name'),
+      'required' => TRUE,
+      'settings' => array(
+        'text_processing' => 0,
+      ),
+      'widget' => array(
+        'settings' => array(
+          'size' => 60,
+        ),
+        'type' => 'text_textfield',
+        'weight' => 0,
+      ),
+    ),
+  );
+
+  // Lift work time
+  $fields['lift_work_time'] = array(
+    'field_base' => array(
+      'field_name' => 'lift_work_time',
+      'entity_types' => array(),
+      'settings' => array(
+        'cache_count' => 4,
+        'cache_enabled' => 0,
+        'granularity' => array(
+          'day' => 0,
+          'hour' => 'hour',
+          'minute' => 'minute',
+          'month' => 0,
+          'second' => 0,
+          'year' => 'year',
+        ),
+        'repeat' => 0,
+        'timezone_db' => '',
+        'todate' => 'required',
+        'tz_handling' => 'none',
+      ),
+      'type' => 'datetime',
+    ),
+    'field_instance' => array(
+      'bundle' => 'lift',
+      'default_value' => NULL,
+      'entity_type' => 'lift',
+      'field_name' => 'lift_work_time',
+      'label' => t('Work time'),
+      'required' => 1,
+      'settings' => array(
+        'default_value' => 'now',
+        'default_value2' => 'same',
+        'default_value_code' => '',
+        'default_value_code2' => '',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'settings' => array(
+          'increment' => 15,
+          'input_format' => 'custom',
+          'input_format_custom' => 'g:i a',
+          'label_position' => 'none',
+          'repeat_collapsed' => 0,
+          'text_parts' => array(),
+          'year_range' => '-0:+3',
+        ),
+        'type' => 'date_text',
+        'weight' => 7,
+      ),
+    ),
+  );
+
+  // Lift status
+  $fields['lift_status'] = array(
+    'field_base' => array(
+      'field_name' => 'lift_status',
+      'entity_types' => array(),
+      'type' => 'entityreference',
+      'settings' => array(
+        'target_type' => 'taxonomy_term',
+        'handler_settings' => array(
+          'target_bundles' => array(
+            'lift_status' => 'lift_status'
+          ),
+        ),
+        'behaviors' => array(
+          'views-select-list' => array(
+            'status' => 1,
+          ),
+        ),
+      ),
+    ),
+    'field_instance' => array(
+      'entity_type' => 'lift',
+      'bundle' => 'lift',
+      'field_name' => 'lift_status',
+      'default_value' => NULL,
+      'label' => t('Status'),
+      'required' => TRUE,
+      'widget' => array(
+        'type' => 'options_select',
+        'weight' => 1,
+      ),
+    ),
+  );
+
+  // Lift type
+  $fields['lift_type'] = array(
+    'field_base' => array(
+      'field_name' => 'lift_type',
+      'entity_types' => array(),
+      'type' => 'entityreference',
+      'settings' => array(
+        'target_type' => 'taxonomy_term',
+        'handler_settings' => array(
+          'target_bundles' => array(
+            'lift_type' => 'lift_type'
+          ),
+        ),
+        'behaviors' => array(
+          'views-select-list' => array(
+            'status' => 1,
+          ),
+        ),
+      ),
+    ),
+    'field_instance' => array(
+      'entity_type' => 'lift',
+      'bundle' => 'lift',
+      'field_name' => 'lift_type',
+      'default_value' => NULL,
+      'label' => t('Type'),
+      'required' => TRUE,
+      'widget' => array(
+        'type' => 'options_select',
+        'weight' => 2,
+      ),
+    ),
+  );
+
+  // Lift height
+  $fields['lift_height'] = array(
+    'field_base' => array(
+      'field_name' => 'lift_height',
+      'entity_types' => array(),
+      'settings' => array(),
+      'type' => 'number_integer',
+    ),
+    'field_instance' => array(
+      'entity_type' => 'lift',
+      'bundle' => 'lift',
+      'field_name' => 'lift_height',
+      'default_value' => NULL,
+      'label' => t('Height'),
+      'settings' => array(
+        'suffix' => 'ft',
+      ),
+      'widget' => array(
+        'type' => 'number',
+        'weight' => 4,
+      ),
+    ),
+  );
+
+  // Lift duration
+  $fields['lift_duration'] = array(
+    'field_base' => array(
+      'field_name' => 'lift_duration',
+      'entity_types' => array(),
+      'settings' => array(),
+      'type' => 'number_integer',
+    ),
+    'field_instance' => array(
+      'entity_type' => 'lift',
+      'bundle' => 'lift',
+      'field_name' => 'lift_duration',
+      'default_value' => NULL,
+      'label' => t('Duration'),
+      'settings' => array(
+        'suffix' => 'min',
+      ),
+      'widget' => array(
+        'type' => 'number',
+        'weight' => 5,
+      ),
+    ),
+  );
+  return $fields;
+}
+
+/**
+ * Create taxonomies
+ */
+function lift_add_vocabularies() {
+  $taxonomies = array(
+    'lift_status' => array(
+      'vocabulary' => (object) array(
+        'name' => 'Lift Status',
+        'description' => '',
+        'machine_name' => 'lift_status',
+      ),
+      'terms' => array(
+        'open' => (object) array(
+          'name' => t('Open'),
+          'weight' => 0,
+        ),
+        'closed' => (object) array(
+          'name' => t('Closed'),
+          'weight' => 1,
+        ),
+      ),
+    ),
+    'lift_type' => array(
+      'vocabulary' => (object) array(
+        'name' => 'Lift Type',
+        'description' => '',
+        'machine_name' => 'lift_type',
+      ),
+      'terms' => array(
+        'quad' => (object) array(
+          'name' => t('Quad'),
+          'weight' => 0,
+        ),
+      ),
+    ),
+  );
+
+  foreach ($taxonomies as $taxonomy) {
+    $vocabulary = taxonomy_vocabulary_machine_name_load($taxonomy['vocabulary']->machine_name);
+
+    // Create vocabulary
+    if (empty($vocabulary)) {
+      $status = taxonomy_vocabulary_save($taxonomy['vocabulary']);
+      if ($status) {
+        $vocabulary = taxonomy_vocabulary_machine_name_load($taxonomy['vocabulary']->machine_name);
+        // Assign terms
+        foreach ($taxonomy['terms'] as $term) {
+          $term->vid = $vocabulary->vid;
+          taxonomy_term_save($term);
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_uninstall();
+ */
+function lift_uninstall() {
+  field_attach_delete_bundle('lift', 'lift');
+}

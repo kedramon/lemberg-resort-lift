@@ -1,0 +1,223 @@
+<?php
+$view = new view();
+$view->name = 'lifts';
+$view->description = '';
+$view->tag = 'default';
+$view->base_table = 'lift';
+$view->human_name = 'Lifts';
+$view->core = 7;
+$view->api_version = '3.0';
+$view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+/* Display: Master */
+$handler = $view->new_display('default', 'Master', 'default');
+$handler->display->display_options['title'] = 'Lifts';
+$handler->display->display_options['use_more_always'] = FALSE;
+$handler->display->display_options['access']['type'] = 'perm';
+$handler->display->display_options['access']['perm'] = 'administer lifts';
+$handler->display->display_options['cache']['type'] = 'none';
+$handler->display->display_options['query']['type'] = 'views_query';
+$handler->display->display_options['exposed_form']['type'] = 'basic';
+$handler->display->display_options['pager']['type'] = 'none';
+$handler->display->display_options['style_plugin'] = 'table';
+$handler->display->display_options['style_options']['columns'] = array(
+  'lift_name' => 'lift_name',
+  'lift_status' => 'lift_status',
+  'lift_work_time' => 'lift_work_time',
+  'lift_height' => 'lift_height',
+  'lift_duration' => 'lift_duration',
+  'lift_type' => 'lift_type',
+  'lid' => 'lid',
+  'nothing' => 'nothing',
+  'nothing_1' => 'nothing',
+);
+$handler->display->display_options['style_options']['default'] = '-1';
+$handler->display->display_options['style_options']['info'] = array(
+  'lift_name' => array(
+    'sortable' => 0,
+    'default_sort_order' => 'asc',
+    'align' => '',
+    'separator' => '',
+    'empty_column' => 0,
+  ),
+  'lift_status' => array(
+    'sortable' => 0,
+    'default_sort_order' => 'asc',
+    'align' => '',
+    'separator' => '',
+    'empty_column' => 0,
+  ),
+  'lift_work_time' => array(
+    'sortable' => 0,
+    'default_sort_order' => 'asc',
+    'align' => '',
+    'separator' => '',
+    'empty_column' => 0,
+  ),
+  'lift_height' => array(
+    'sortable' => 0,
+    'default_sort_order' => 'asc',
+    'align' => '',
+    'separator' => '',
+    'empty_column' => 0,
+  ),
+  'lift_duration' => array(
+    'sortable' => 0,
+    'default_sort_order' => 'asc',
+    'align' => '',
+    'separator' => '',
+    'empty_column' => 0,
+  ),
+  'lift_type' => array(
+    'sortable' => 0,
+    'default_sort_order' => 'asc',
+    'align' => '',
+    'separator' => '',
+    'empty_column' => 0,
+  ),
+  'lid' => array(
+    'sortable' => 0,
+    'default_sort_order' => 'asc',
+    'align' => '',
+    'separator' => '',
+    'empty_column' => 0,
+  ),
+  'nothing' => array(
+    'align' => '',
+    'separator' => '/',
+    'empty_column' => 0,
+  ),
+  'nothing_1' => array(
+    'align' => '',
+    'separator' => '',
+    'empty_column' => 0,
+  ),
+);
+$handler->display->display_options['style_options']['empty_table'] = TRUE;
+/* No results behavior: Global: Text area */
+$handler->display->display_options['empty']['area']['id'] = 'area';
+$handler->display->display_options['empty']['area']['table'] = 'views';
+$handler->display->display_options['empty']['area']['field'] = 'area';
+$handler->display->display_options['empty']['area']['empty'] = TRUE;
+$handler->display->display_options['empty']['area']['content'] = 'No lifts.';
+$handler->display->display_options['empty']['area']['format'] = 'filtered_html';
+/* Field: Lift: Name */
+$handler->display->display_options['fields']['lift_name']['id'] = 'lift_name';
+$handler->display->display_options['fields']['lift_name']['table'] = 'field_data_lift_name';
+$handler->display->display_options['fields']['lift_name']['field'] = 'lift_name';
+$handler->display->display_options['fields']['lift_name']['element_label_colon'] = FALSE;
+$handler->display->display_options['fields']['lift_name']['settings'] = array(
+  'title_style' => '_none',
+  'title_link' => 'content',
+  'title_class' => '',
+);
+/* Field: Lift: Status */
+$handler->display->display_options['fields']['lift_status']['id'] = 'lift_status';
+$handler->display->display_options['fields']['lift_status']['table'] = 'field_data_lift_status';
+$handler->display->display_options['fields']['lift_status']['field'] = 'lift_status';
+$handler->display->display_options['fields']['lift_status']['element_label_colon'] = FALSE;
+$handler->display->display_options['fields']['lift_status']['settings'] = array(
+  'link' => 0,
+);
+/* Field: Lift: Work time */
+$handler->display->display_options['fields']['lift_work_time']['id'] = 'lift_work_time';
+$handler->display->display_options['fields']['lift_work_time']['table'] = 'field_data_lift_work_time';
+$handler->display->display_options['fields']['lift_work_time']['field'] = 'lift_work_time';
+$handler->display->display_options['fields']['lift_work_time']['settings'] = array(
+  'format_type' => 'short',
+  'fromto' => 'both',
+  'multiple_number' => '',
+  'multiple_from' => '',
+  'multiple_to' => '',
+  'show_repeat_rule' => 'show',
+);
+/* Field: Lift: Height */
+$handler->display->display_options['fields']['lift_height']['id'] = 'lift_height';
+$handler->display->display_options['fields']['lift_height']['table'] = 'field_data_lift_height';
+$handler->display->display_options['fields']['lift_height']['field'] = 'lift_height';
+$handler->display->display_options['fields']['lift_height']['element_label_colon'] = FALSE;
+$handler->display->display_options['fields']['lift_height']['settings'] = array(
+  'thousand_separator' => ' ',
+  'prefix_suffix' => 1,
+);
+/* Field: Lift: Duration */
+$handler->display->display_options['fields']['lift_duration']['id'] = 'lift_duration';
+$handler->display->display_options['fields']['lift_duration']['table'] = 'field_data_lift_duration';
+$handler->display->display_options['fields']['lift_duration']['field'] = 'lift_duration';
+$handler->display->display_options['fields']['lift_duration']['element_label_colon'] = FALSE;
+$handler->display->display_options['fields']['lift_duration']['settings'] = array(
+  'thousand_separator' => ' ',
+  'prefix_suffix' => 1,
+);
+/* Field: Lift: Type */
+$handler->display->display_options['fields']['lift_type']['id'] = 'lift_type';
+$handler->display->display_options['fields']['lift_type']['table'] = 'field_data_lift_type';
+$handler->display->display_options['fields']['lift_type']['field'] = 'lift_type';
+$handler->display->display_options['fields']['lift_type']['settings'] = array(
+  'link' => 0,
+);
+/* Field: Lift: Lift id */
+$handler->display->display_options['fields']['lid']['id'] = 'lid';
+$handler->display->display_options['fields']['lid']['table'] = 'lift';
+$handler->display->display_options['fields']['lid']['field'] = 'lid';
+$handler->display->display_options['fields']['lid']['label'] = '';
+$handler->display->display_options['fields']['lid']['exclude'] = TRUE;
+$handler->display->display_options['fields']['lid']['element_label_colon'] = FALSE;
+/* Field: Global: Custom text */
+$handler->display->display_options['fields']['nothing']['id'] = 'nothing';
+$handler->display->display_options['fields']['nothing']['table'] = 'views';
+$handler->display->display_options['fields']['nothing']['field'] = 'nothing';
+$handler->display->display_options['fields']['nothing']['label'] = 'Operations';
+$handler->display->display_options['fields']['nothing']['alter']['text'] = 'Edit';
+$handler->display->display_options['fields']['nothing']['alter']['make_link'] = TRUE;
+$handler->display->display_options['fields']['nothing']['alter']['path'] = 'lift/[lid]/edit';
+$handler->display->display_options['fields']['nothing']['element_label_colon'] = FALSE;
+/* Field: Global: Custom text */
+$handler->display->display_options['fields']['nothing_1']['id'] = 'nothing_1';
+$handler->display->display_options['fields']['nothing_1']['table'] = 'views';
+$handler->display->display_options['fields']['nothing_1']['field'] = 'nothing';
+$handler->display->display_options['fields']['nothing_1']['label'] = '';
+$handler->display->display_options['fields']['nothing_1']['alter']['text'] = 'Delete';
+$handler->display->display_options['fields']['nothing_1']['alter']['make_link'] = TRUE;
+$handler->display->display_options['fields']['nothing_1']['alter']['path'] = 'lift/[lid]/delete';
+$handler->display->display_options['fields']['nothing_1']['element_label_colon'] = FALSE;
+/* Sort criterion: Lift: Created */
+$handler->display->display_options['sorts']['created']['id'] = 'created';
+$handler->display->display_options['sorts']['created']['table'] = 'lift';
+$handler->display->display_options['sorts']['created']['field'] = 'created';
+/* Filter criterion: Lift: Status (lift_status) */
+$handler->display->display_options['filters']['lift_status_target_id']['id'] = 'lift_status_target_id';
+$handler->display->display_options['filters']['lift_status_target_id']['table'] = 'field_data_lift_status';
+$handler->display->display_options['filters']['lift_status_target_id']['field'] = 'lift_status_target_id';
+$handler->display->display_options['filters']['lift_status_target_id']['exposed'] = TRUE;
+$handler->display->display_options['filters']['lift_status_target_id']['expose']['operator_id'] = 'lift_status_target_id_op';
+$handler->display->display_options['filters']['lift_status_target_id']['expose']['label'] = 'Status';
+$handler->display->display_options['filters']['lift_status_target_id']['expose']['operator'] = 'lift_status_target_id_op';
+$handler->display->display_options['filters']['lift_status_target_id']['expose']['identifier'] = 'lift_status_target_id';
+$handler->display->display_options['filters']['lift_status_target_id']['expose']['remember_roles'] = array(
+  2 => '2',
+  1 => 0,
+);
+/* Filter criterion: Lift: Type (lift_type) */
+$handler->display->display_options['filters']['lift_type_target_id']['id'] = 'lift_type_target_id';
+$handler->display->display_options['filters']['lift_type_target_id']['table'] = 'field_data_lift_type';
+$handler->display->display_options['filters']['lift_type_target_id']['field'] = 'lift_type_target_id';
+$handler->display->display_options['filters']['lift_type_target_id']['exposed'] = TRUE;
+$handler->display->display_options['filters']['lift_type_target_id']['expose']['operator_id'] = 'lift_type_target_id_op';
+$handler->display->display_options['filters']['lift_type_target_id']['expose']['label'] = 'Type';
+$handler->display->display_options['filters']['lift_type_target_id']['expose']['operator'] = 'lift_type_target_id_op';
+$handler->display->display_options['filters']['lift_type_target_id']['expose']['identifier'] = 'lift_type_target_id';
+$handler->display->display_options['filters']['lift_type_target_id']['expose']['remember_roles'] = array(
+  2 => '2',
+  1 => 0,
+);
+
+/* Display: Page */
+$handler = $view->new_display('page', 'Page', 'page');
+$handler->display->display_options['path'] = 'admin/content/lifts';
+$handler->display->display_options['menu']['type'] = 'normal';
+$handler->display->display_options['menu']['title'] = 'Lifts';
+$handler->display->display_options['menu']['weight'] = '0';
+$handler->display->display_options['menu']['name'] = 'management';
+$handler->display->display_options['menu']['context'] = 0;
+$handler->display->display_options['menu']['context_only_inline'] = 0;

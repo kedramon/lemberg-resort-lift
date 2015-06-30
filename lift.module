@@ -1,0 +1,155 @@
+<?php
+
+// Include Lift CRUD
+require_once 'entity/lift.entity.crud.inc';
+// Include Lift functions
+require_once 'entity/lift.entity.func.inc';
+
+/**
+ * Implements hook_menu();
+ */
+function lift_menu() {
+  $items = array();
+
+  // Lift menu items.
+  $items['admin/content/lifts/lift/add'] = array(
+    'title' => 'Add lift',
+    'page callback' => 'lift_add_page',
+    'access callback' => 'lift_access',
+    'access arguments' => array('create'),
+    'file' => 'entity/lift.entity.pages.inc',
+    'type' => MENU_LOCAL_ACTION,
+  );
+  $items['lift/%lift'] = array(
+    'title callback' => 'entity_label',
+    'title arguments' => array('lift', 1),
+    'page callback' => 'lift_view_page',
+    'page arguments' => array(1),
+    'access callback' => 'lift_access',
+    'access arguments' => array('view', 1),
+    'file' => 'entity/lift.entity.pages.inc',
+  );
+  $items['lift/%lift/view'] = array(
+    'title' => 'View',
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'weight' => -10,
+  );
+  $items['lift/%lift/edit'] = array(
+    'title' => 'Edit',
+    'page callback' => 'lift_add_page',
+    'page arguments' => array(1),
+    'access callback' => 'lift_access',
+    'access arguments' => array('edit', 1),
+    'file' => 'entity/lift.entity.pages.inc',
+    'context' => MENU_CONTEXT_PAGE | MENU_CONTEXT_INLINE,
+    'type' => MENU_LOCAL_TASK,
+    'weight' => 0,
+  );
+  $items['lift/%lift/delete'] = array(
+    'title' => 'Delete',
+    'page callback' => 'lift_delete_page',
+    'page arguments' => array(1),
+    'access callback' => 'lift_access',
+    'access arguments' => array('delete', 1),
+    'file' => 'entity/lift.entity.pages.inc',
+    'context' => MENU_CONTEXT_PAGE | MENU_CONTEXT_INLINE,
+    'type' => MENU_LOCAL_TASK,
+    'weight' => 10,
+  );
+
+  // Admin menu items.
+  if (module_exists('field_ui')) {
+    $items['admin/structure/lift'] = array(
+      'title' => 'Lifts',
+      'description' => 'Manage lifts.',
+      'page callback' => 'lift_admin_page',
+      'access arguments' => array('administer lifts'),
+      'file' => 'includes/lift.admin.inc',
+    );
+  }
+
+  return $items;
+}
+
+/**
+ * Implements hook_entity_info();
+ */
+function lift_entity_info() {
+  $entity_info = array(
+    'lift' => array(
+      'label' => t('Lift'),
+      'entity class' => 'Lift',
+      'controller class' => 'LiftController',
+      'base table' => 'lift',
+      'module' => 'lift',
+      'label callback' => 'lift_entity_label',
+      'fieldable' => TRUE,
+      'entity keys' => array(
+        'id' => 'lid',
+        'label' => 'lid',
+      ),
+      'bundles' => array(
+        'lift' => array(
+          'label' => t('Lift'),
+          'admin' => array(
+            'path' => 'admin/structure/lift',
+            'access arguments' => array('administer lifts'),
+          ),
+        ),
+      ),
+    ),
+  );
+
+  return $entity_info;
+}
+
+/**
+ * Implements hook_permission();
+ */
+function lift_permission() {
+  $permissions = array();
+
+  $permissions['administer lifts'] = array(
+    'title' => t('Administer lifts'),
+  );
+  $permissions['access lifts'] = array(
+    'title' => t('Access lifts'),
+  );
+  $permissions['manage lifts'] = array(
+    'title' => t('Manage lifts'),
+  );
+
+  return $permissions;
+}
+
+/**
+ * Implements hook_views_api().
+ */
+function lift_views_api() {
+  return array(
+    'api' => 2,
+    'path' => drupal_get_path('module', 'lift') . '/views',
+  );
+}
+/**
+ * Implements hook_entity_property_info().
+ * @param null
+ * @return array()
+ */
+function lift_entity_property_info() {
+  $info = array();
+
+  $info['lift']['properties']['lid'] = array(
+    'label' => t('Lift id'),
+    'type' => 'integer',
+    'description' => t('Entity ID'),
+    'schema field' => 'lid',
+  );
+  $info['lift']['properties']['created'] = array(
+    'label' => t('Created'),
+    'type' => 'date',
+    'description' => t('Entity created'),
+    'schema field' => 'created',
+  );
+  return $info;
+}
