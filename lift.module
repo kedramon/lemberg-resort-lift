@@ -82,6 +82,7 @@ function lift_entity_info() {
       'controller class' => 'LiftController',
       'base table' => 'lift',
       'module' => 'lift',
+      'access callback' => 'lift_access',
       'label callback' => 'lift_entity_label',
       'fieldable' => TRUE,
       'entity keys' => array(
