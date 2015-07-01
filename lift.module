@@ -173,3 +173,28 @@ function lift_menu_local_tasks_alter(&$data, $router_item, $root_path) {
       break;
   }
 }
+
+/**
+ * Implements hook_date_format_types().
+ */
+function lift_date_format_types() {
+  return array(
+    'simple_time'  => t('Simple time'),
+  );
+}
+
+/**
+ * Implements hook_date_formats().
+ */
+function lift_date_formats() {
+  $formats = array();
+  $formats[] = array(
+    'type'    => 'simple_time',
+    'format'  => 'g:i a',
+    'locales' => array(),
+  );
+  foreach ($formats as $format) {
+    variable_set('date_format_' . $format['type'], $format['format']);
+  }
+  return $formats;
+}
