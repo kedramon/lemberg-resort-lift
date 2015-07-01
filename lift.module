@@ -12,7 +12,7 @@ function lift_menu() {
   $items = array();
 
   // Lift menu items.
-  $items['admin/content/lifts/lift/add'] = array(
+  $items['lift/add'] = array(
     'title' => 'Add lift',
     'page callback' => 'lift_add_page',
     'access callback' => 'lift_access',
@@ -131,6 +131,7 @@ function lift_views_api() {
     'path' => drupal_get_path('module', 'lift') . '/views',
   );
 }
+
 /**
  * Implements hook_entity_property_info().
  * @param null
@@ -152,4 +153,23 @@ function lift_entity_property_info() {
     'schema field' => 'created',
   );
   return $info;
+}
+
+/**
+ * Implements hook_menu_local_tasks_alter().
+ * @param null
+ * @return array()
+ */
+function lift_menu_local_tasks_alter(&$data, $router_item, $root_path) {
+  switch ($root_path) {
+    case 'admin/content/lifts':
+      $item = menu_get_item('lift/add');
+      if ($item['access']) {
+        $data['actions']['output'][] = array(
+          '#theme' => 'menu_local_action',
+          '#link' => $item,
+        );
+      }
+      break;
+  }
 }
