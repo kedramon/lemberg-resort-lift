@@ -38,6 +38,8 @@ function lift_schema() {
 }
 
 function lift_install() {
+  module_enable(array('entityreference'), TRUE);
+
   // Attach fields to Lift entity
   foreach (lift_fields() as $field) {
     if (!field_info_field($field['field_base']['field_name'])) {
@@ -235,7 +237,7 @@ function lift_fields() {
       'field_name' => 'lift_duration',
       'entity_types' => array(),
       'settings' => array(),
-      'type' => 'number_integer',
+      'type' => 'text',
     ),
     'field_instance' => array(
       'entity_type' => 'lift',
@@ -243,11 +245,8 @@ function lift_fields() {
       'field_name' => 'lift_duration',
       'default_value' => NULL,
       'label' => t('Duration'),
-      'settings' => array(
-        'suffix' => 'min',
-      ),
       'widget' => array(
-        'type' => 'number',
+        'type' => 'text_textfield',
         'weight' => 5,
       ),
     ),
@@ -315,4 +314,18 @@ function lift_add_vocabularies() {
  */
 function lift_uninstall() {
   field_attach_delete_bundle('lift', 'lift');
+}
+
+/**
+ * Add type to {lift} table.
+ */
+function lift_update_7100() {
+  $spec = array(
+    'description' => 'The bundle type',
+    'type'        => 'varchar',
+    'length'      => 32,
+    'not null'    => TRUE,
+    'default'     => 'lift',
+  );
+  db_add_field('lift', 'type', $spec);
 }

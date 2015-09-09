@@ -16,6 +16,7 @@ class Lift extends Entity {
    * @var int
    */
   public $lid;
+  public $type;
 
   /**
    * Lift record creation Unix timestamp.
@@ -44,6 +45,7 @@ class Lift extends Entity {
    * @see entity_create()
    */
   public function __construct(array $values = array()) {
+    $this->type = 'lift';
     parent::__construct($values, 'lift');
   }
 }

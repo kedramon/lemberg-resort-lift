@@ -42,7 +42,8 @@ function lift_edit_form($form, &$form_state) {
  * Lift entity edit form validation callback.
  */
 function lift_edit_form_validate($form, &$form_state) {
-  entity_form_field_validate('lift', $form, $form_state);
+  $trail = $form_state['lift'];
+  field_attach_form_validate('lift', $trail, $form, $form_state);
 }
 
 /**
